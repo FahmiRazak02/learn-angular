@@ -1,8 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
-import { DUMMY_USERS } from '../dummy-users';
-
-const randomIdx = Math.floor(Math.random() * DUMMY_USERS.length);
-
+import { Component, computed, Input, signal } from '@angular/core';
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -11,26 +7,14 @@ const randomIdx = Math.floor(Math.random() * DUMMY_USERS.length);
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  selectedUser = signal(DUMMY_USERS[randomIdx]);
-  imagePath = computed(() => 'assets/users/' + this.selectedUser().avatar);
-  name = computed(() => this.selectedUser().name);
+  @Input({required: true}) avatar!: string;
+  @Input({required: true}) name!: string;
 
-  onSelectedUser() {
-    const randomIdx = Math.floor(Math.random() * DUMMY_USERS.length);
-    this.selectedUser.set(DUMMY_USERS[randomIdx]);
+  get imagePath() {
+    return "assets/users/" + this.avatar;
   }
 
-  // This is for a world without signal
-  // get imagePath() {
-  //   return 'assets/users/' + this.selectedUser.avatar;
-  // }
+  onSelectedUser() {
 
-  // get name() {
-  //   return this.selectedUser.name;
-  // }
-
-  // onSelectedUser() {
-  //   const randomIdx1 = Math.floor(Math.random() * DUMMY_USERS.length);
-  //   this.selectedUser = DUMMY_USERS[randomIdx1];
-  // }
+  }
 }
