@@ -6,7 +6,7 @@
         id="initial-investment"
         name="initial-investment"
         type="number"
-        [(ngModel)]="values.initialInvestment"
+        [(ngModel)]="values().initialInvestment"
       />
     </p>
     <p>
@@ -15,7 +15,7 @@
         id="annual-investment"
         name="annual-investment"
         type="number"
-        [(ngModel)]="values.annualInvestment"
+        [(ngModel)]="values().annualInvestment"
       />
     </p>
   </div>
@@ -26,7 +26,7 @@
         id="expected-return"
         name="expected-return"
         type="number"
-        [(ngModel)]="values.expectedReturn"
+        [(ngModel)]="values().expectedReturn"
       />
     </p>
     <p>
@@ -35,7 +35,7 @@
         id="duration"
         name="duration"
         type="number"
-        [(ngModel)]="values.duration"
+        [(ngModel)]="values().duration" 
       />
     </p>
   </div>

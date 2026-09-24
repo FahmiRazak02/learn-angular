@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { userInput } from './user-input.model';
+import { Component, inject, signal } from '@angular/core';
+import { InvestmentInput } from './user-input.model';
 import { FormsModule } from '@angular/forms';
+import { InvestmentService } from './investment.service';
 
 @Component({
   selector: 'app-user-input',
@@ -10,30 +11,33 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './user-input.component.css',
 })
 export class UserInputComponent {
-  @Output() calculate = new EventEmitter<userInput>();
+  private investmentService = inject(InvestmentService);
 
-  values: userInput = {
+  values = signal<InvestmentInput>({
     initialInvestment: 0,
     annualInvestment: 0,
-    expectedReturn: 0,
-    duration: 0,
-  };
+    expectedReturn: 5,
+    duration: 10,
+  });
 
   onSubmit = () => {
     console.log(
       `
       Submitted 
-      1. ${this.values.initialInvestment}
-      2. ${this.values.annualInvestment}
-      3. ${this.values.expectedReturn}
-      4. ${this.values.duration}
+      1. ${this.values().initialInvestment} 
+      2. ${this.values().annualInvestment}
+      3. ${this.values().expectedReturn}
+      4. ${this.values().duration}
       `,
     );
-    this.calculate.emit({
-      initialInvestment: +this.values.initialInvestment,
-      annualInvestment: +this.values.annualInvestment,
-      expectedReturn: +this.values.expectedReturn,
-      duration: +this.values.duration,
+    
+    this.investmentService.calculateInvestmentResults(this.values());
+
+    this.values.set({
+      initialInvestment: 0,
+      annualInvestment: 0,
+      expectedReturn: 5,
+      duration: 10,
     });
   };
 }
